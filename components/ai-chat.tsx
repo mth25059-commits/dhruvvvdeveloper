@@ -19,6 +19,7 @@ const SUGGESTIONS = [
   "What does Dhruv build?",
   "How fast can you ship a site?",
   "Can you make a Telegram bot?",
+  "Show me your tech stack",
 ];
 
 export function AiChat() {
@@ -41,15 +42,16 @@ export function AiChat() {
     setInput("");
     setLoading(true);
     try {
-      // Build an absolute URL via window.location.origin (which never includes
-      // any basic-auth credentials in the URL) so fetch() doesn't reject the
-      // request when previewed behind a tunnel like https://user:pass@host.
       const endpoint = `${window.location.origin}/api/chat`;
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: nextMessages }),
+        signal: controller.signal,
       });
+      clearTimeout(timeout);
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
         throw new Error(data?.error ?? "Couldn't reach the AI right now.");
@@ -57,7 +59,12 @@ export function AiChat() {
       const data = (await res.json()) as { reply: string };
       setMessages((m) => [...m, { role: "assistant", content: data.reply }]);
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Network error.";
+      const msg =
+        err instanceof Error
+          ? err.name === "AbortError"
+            ? "Request timed out. Try again."
+            : err.message
+          : "Network error.";
       setMessages((m) => [
         ...m,
         {

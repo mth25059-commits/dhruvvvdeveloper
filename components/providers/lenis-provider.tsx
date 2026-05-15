@@ -25,7 +25,6 @@ export function LenisProvider({ children }: { children: ReactNode }) {
       e.preventDefault();
       const y = el.getBoundingClientRect().top + window.scrollY - 60;
       window.scrollTo({ top: y, behavior: "smooth" });
-      // Update the URL hash without re-triggering scroll.
       history.replaceState(null, "", id);
     };
     document.addEventListener("click", onClick);

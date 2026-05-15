@@ -80,6 +80,17 @@ export const PROJECTS: Project[] = [
     href: "https://petvet-lilac.vercel.app/",
     accent: "amber",
   },
+  {
+    id: "oxygengym",
+    year: "2025",
+    title: "Oxygen Gym",
+    type: "Fitness · Business site",
+    stack: "HTML · CSS · JS · Vercel",
+    description:
+      "Gym landing page with intro car animation, gallery shuffle, membership plans, and WhatsApp lead capture. Bold dark-theme fitness branding.",
+    href: "https://oxygen-gym-pi.vercel.app/",
+    accent: "cyan",
+  },
 ];
 
 export const TOOL_CATEGORIES = [

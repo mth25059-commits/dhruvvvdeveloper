@@ -9,25 +9,27 @@ const containerVariants = {
   hidden: { opacity: 1 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.4 },
+    transition: { staggerChildren: 0.12, delayChildren: 1.8 },
   },
 };
 
 const lineVariants = {
-  hidden: { y: "110%", opacity: 0 },
+  hidden: { y: "120%", opacity: 0, filter: "blur(8px)" },
   show: {
     y: "0%",
     opacity: 1,
-    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    filter: "blur(0px)",
+    transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   },
 };
 
 const fadeUp = {
-  hidden: { y: 24, opacity: 0 },
+  hidden: { y: 30, opacity: 0, filter: "blur(4px)" },
   show: {
     y: 0,
     opacity: 1,
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    filter: "blur(0px)",
+    transition: { duration: 1.0, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   },
 };
 
@@ -91,7 +93,7 @@ export function Hero() {
           variants={fadeUp}
           initial="hidden"
           animate="show"
-          transition={{ delay: 1.2, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ delay: 2.6, duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
           className="mt-10 flex flex-col gap-6 md:mt-16 md:flex-row md:items-end md:justify-between"
         >
           <p className="max-w-xl text-pretty text-base text-[rgb(var(--text-muted))] md:text-lg">
@@ -126,7 +128,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.6, duration: 0.8 }}
+          transition={{ delay: 3.0, duration: 0.8 }}
           className="mt-20 flex items-center justify-center md:justify-start"
         >
           <a
