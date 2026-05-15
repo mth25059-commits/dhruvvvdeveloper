@@ -75,7 +75,7 @@ export function About() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1, duration: 0.6 }}
-                  className="rounded-2xl border border-white/8 bg-[rgb(var(--bg-panel))] p-6"
+                  className="rounded-2xl border border-white/8 bg-[rgb(var(--bg-panel))] p-6 transition-all duration-300 hover:border-white/20 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(var(--accent-violet)/0.12)] cursor-default"
                 >
                   <div className="font-display text-3xl font-semibold gradient-text md:text-4xl">
                     {s.num}
@@ -102,7 +102,7 @@ export function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.6 }}
-                className="group relative bg-[rgb(var(--bg-panel))] p-5 transition-colors hover:bg-[rgb(var(--bg-elevated))] md:p-6"
+                className="group relative bg-[rgb(var(--bg-panel))] p-5 transition-all duration-300 hover:bg-[rgb(var(--bg-elevated))] hover:-translate-y-1 hover:shadow-[0_4px_20px_rgb(0_0_0/0.15)] cursor-default md:p-6"
               >
                 <div className="font-mono text-xs text-[rgb(var(--text-muted))]">
                   {step.num}

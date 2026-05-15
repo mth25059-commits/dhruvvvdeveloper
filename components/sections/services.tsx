@@ -96,7 +96,7 @@ function ServiceRow({
           {service.bullets.map((b, j) => (
             <li
               key={j}
-              className="flex items-start gap-3 text-sm text-[rgb(var(--text-muted))] md:text-base"
+              className="flex items-start gap-3 text-sm text-[rgb(var(--text-muted))] transition-all duration-200 hover:text-[rgb(var(--text-primary))] hover:translate-x-1 md:text-base"
             >
               <span
                 className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full"

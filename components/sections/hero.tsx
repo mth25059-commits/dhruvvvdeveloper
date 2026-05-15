@@ -116,7 +116,7 @@ export function Hero() {
             </a>
             <a
               href="#work"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-[rgb(var(--text-primary))] backdrop-blur-md transition-all hover:border-white/20"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-[rgb(var(--text-primary))] backdrop-blur-md transition-all duration-300 hover:border-white/25 hover:bg-white/10 hover:shadow-[0_0_20px_rgb(var(--accent-violet)/0.2)] hover:-translate-y-0.5"
               data-cursor-hover
             >
               See selected work

@@ -78,7 +78,7 @@ export function Stack() {
                         duration: 0.4,
                         delay: i * 0.08 + j * 0.05,
                       }}
-                      className="flex items-center gap-2 text-sm text-[rgb(var(--text-muted))]"
+                      className="flex items-center gap-2 text-sm text-[rgb(var(--text-muted))] transition-all duration-200 hover:text-[rgb(var(--text-primary))] hover:translate-x-1 cursor-default"
                     >
                       <span className="font-mono text-[10px] opacity-50">
                         {String(j + 1).padStart(2, "0")}

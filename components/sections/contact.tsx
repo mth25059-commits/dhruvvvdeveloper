@@ -196,7 +196,7 @@ export function Contact() {
                 external
               />
             </ul>
-            <div className="mt-8 rounded-2xl border border-white/8 bg-[rgb(var(--bg-base))] p-5">
+            <div className="mt-8 rounded-2xl border border-white/8 bg-[rgb(var(--bg-base))] p-5 transition-all duration-300 hover:border-white/20 hover:shadow-[0_4px_20px_rgb(var(--accent-violet)/0.1)]">
               <div className="text-xs uppercase tracking-[0.18em] text-[rgb(var(--text-muted))]">
                 Response time
               </div>
@@ -305,7 +305,7 @@ function ContactLink({
       <a
         href={href}
         {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        className="group flex items-center justify-between rounded-2xl border border-white/8 bg-[rgb(var(--bg-base))] px-5 py-4 transition-all hover:border-[rgb(var(--accent-violet)/0.5)] hover:bg-[rgb(var(--bg-elevated))]"
+        className="group flex items-center justify-between rounded-2xl border border-white/8 bg-[rgb(var(--bg-base))] px-5 py-4 transition-all duration-300 hover:border-[rgb(var(--accent-violet)/0.5)] hover:bg-[rgb(var(--bg-elevated))] hover:-translate-y-0.5 hover:shadow-[0_4px_20px_rgb(var(--accent-violet)/0.1)]"
         data-cursor-hover
       >
         <div className="flex items-center gap-3">
