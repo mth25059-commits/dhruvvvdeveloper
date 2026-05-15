@@ -81,14 +81,14 @@ export const PROJECTS: Project[] = [
     accent: "amber",
   },
   {
-    id: "dhruvdev",
+    id: "oxygengym",
     year: "2025",
-    title: "dhruvdeveloper.me",
-    type: "Portfolio · Personal brand",
-    stack: "Next.js · Tailwind · Motion · GSAP",
+    title: "Oxygen Gym",
+    type: "Fitness · Business site",
+    stack: "HTML · CSS · JS · Vercel",
     description:
-      "This very site — aurora violet design, 3D wireframe globe, AI chatbot, Lenis smooth scroll, and full custom cursor. My digital home.",
-    href: "https://dhruvdeveloper.me",
+      "Gym landing page with intro car animation, gallery shuffle, membership plans, and WhatsApp lead capture. Bold dark-theme fitness branding.",
+    href: "https://oxygen-gym-pi.vercel.app/",
     accent: "cyan",
   },
 ];

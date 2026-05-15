@@ -10,11 +10,11 @@ export function LenisProvider({ children }: { children: ReactNode }) {
     if (isTouch) return;
 
     const lenis = new Lenis({
-      duration: 1.4,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      wheelMultiplier: 0.85,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.8,
     });
 
     let rafId = 0;
