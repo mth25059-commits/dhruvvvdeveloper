@@ -80,6 +80,17 @@ export const PROJECTS: Project[] = [
     href: "https://petvet-lilac.vercel.app/",
     accent: "amber",
   },
+  {
+    id: "dhruvdev",
+    year: "2025",
+    title: "dhruvdeveloper.me",
+    type: "Portfolio · Personal brand",
+    stack: "Next.js · Tailwind · Motion · GSAP",
+    description:
+      "This very site — aurora violet design, 3D wireframe globe, AI chatbot, Lenis smooth scroll, and full custom cursor. My digital home.",
+    href: "https://dhruvdeveloper.me",
+    accent: "cyan",
+  },
 ];
 
 export const TOOL_CATEGORIES = [
