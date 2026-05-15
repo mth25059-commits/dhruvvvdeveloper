@@ -68,50 +68,70 @@ export async function POST(request: Request) {
     );
   }
 
-  try {
-    const res = await fetch(
-      "https://api.groq.com/openai/v1/chat/completions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
+  const maxRetries = 2;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 12000);
+      const res = await fetch(
+        "https://api.groq.com/openai/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "llama-3.3-70b-versatile",
+            temperature: 0.55,
+            max_tokens: 350,
+            messages: [
+              { role: "system", content: SYSTEM_PROMPT },
+              ...trimmed,
+            ],
+          }),
+          cache: "no-store",
+          signal: controller.signal,
         },
-        body: JSON.stringify({
-          model: "llama-3.3-70b-versatile",
-          temperature: 0.55,
-          max_tokens: 350,
-          messages: [
-            { role: "system", content: SYSTEM_PROMPT },
-            ...trimmed,
-          ],
-        }),
-        cache: "no-store",
-      },
-    );
+      );
+      clearTimeout(timeout);
 
-    if (!res.ok) {
-      const errText = await res.text();
-      console.error("Groq API error:", errText);
+      if (!res.ok) {
+        const errText = await res.text();
+        console.error(`Groq API error (attempt ${attempt + 1}):`, errText);
+        if (attempt < maxRetries && (res.status === 429 || res.status >= 500)) {
+          await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+          continue;
+        }
+        return NextResponse.json(
+          { error: "AI is taking a break. Try email instead." },
+          { status: 502 },
+        );
+      }
+
+      const data = (await res.json()) as {
+        choices?: { message?: { content?: string } }[];
+      };
+      const reply =
+        data.choices?.[0]?.message?.content?.trim() ??
+        "Hmm, I didn't quite catch that. Try rephrasing?";
+
+      return NextResponse.json({ reply });
+    } catch (err) {
+      console.error(`Chat route error (attempt ${attempt + 1}):`, err);
+      if (attempt < maxRetries) {
+        await new Promise((r) => setTimeout(r, 1000 * (attempt + 1)));
+        continue;
+      }
       return NextResponse.json(
-        { error: "AI is taking a break. Try email instead." },
-        { status: 502 },
+        { error: "Network error. Try emailing Dhruv directly." },
+        { status: 500 },
       );
     }
-
-    const data = (await res.json()) as {
-      choices?: { message?: { content?: string } }[];
-    };
-    const reply =
-      data.choices?.[0]?.message?.content?.trim() ??
-      "Hmm, I didn't quite catch that. Try rephrasing?";
-
-    return NextResponse.json({ reply });
-  } catch (err) {
-    console.error("Chat route error:", err);
-    return NextResponse.json(
-      { error: "Network error. Try emailing Dhruv directly." },
-      { status: 500 },
-    );
   }
+
+  return NextResponse.json(
+    { error: "AI is temporarily unavailable. Try emailing Dhruv directly." },
+    { status: 500 },
+  );
 }
