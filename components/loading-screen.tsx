@@ -53,41 +53,43 @@ export function LoadingScreen() {
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden"
           style={{ background: "rgb(var(--bg-base))" }}
         >
-          {/* Mesh background blobs */}
+          {/* Mesh background blobs — simplified on mobile for perf */}
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
             <motion.div
               className="absolute rounded-full"
               style={{
-                width: "40vw",
-                height: "40vw",
+                width: "clamp(200px, 40vw, 500px)",
+                height: "clamp(200px, 40vw, 500px)",
                 top: "-10%",
                 left: "-10%",
                 background:
                   "radial-gradient(circle, rgb(var(--accent-violet)/0.4), transparent 65%)",
-                filter: "blur(60px)",
+                filter: "blur(40px)",
+                willChange: "transform",
               }}
               animate={{
-                x: [0, 40, -20, 0],
-                y: [0, 30, -10, 0],
-                scale: [1, 1.1, 0.95, 1],
+                x: [0, 20, -10, 0],
+                y: [0, 15, -5, 0],
+                scale: [1, 1.05, 0.97, 1],
               }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
               className="absolute rounded-full"
               style={{
-                width: "50vw",
-                height: "50vw",
+                width: "clamp(220px, 50vw, 600px)",
+                height: "clamp(220px, 50vw, 600px)",
                 bottom: "-15%",
                 right: "-10%",
                 background:
                   "radial-gradient(circle, rgb(var(--accent-pink)/0.35), transparent 65%)",
-                filter: "blur(60px)",
+                filter: "blur(40px)",
+                willChange: "transform",
               }}
               animate={{
-                x: [0, -30, 20, 0],
-                y: [0, -20, 15, 0],
-                scale: [1, 0.95, 1.08, 1],
+                x: [0, -15, 10, 0],
+                y: [0, -10, 8, 0],
+                scale: [1, 0.97, 1.04, 1],
               }}
               transition={{
                 duration: 7,
@@ -97,7 +99,7 @@ export function LoadingScreen() {
               }}
             />
             <motion.div
-              className="absolute rounded-full"
+              className="absolute rounded-full hidden md:block"
               style={{
                 width: "30vw",
                 height: "30vw",
@@ -105,11 +107,12 @@ export function LoadingScreen() {
                 left: "30%",
                 background:
                   "radial-gradient(circle, rgb(var(--accent-amber)/0.25), transparent 65%)",
-                filter: "blur(80px)",
+                filter: "blur(50px)",
+                willChange: "transform",
               }}
               animate={{
-                x: [0, 25, -15, 0],
-                y: [0, -25, 20, 0],
+                x: [0, 15, -10, 0],
+                y: [0, -15, 10, 0],
               }}
               transition={{
                 duration: 8,
@@ -120,18 +123,17 @@ export function LoadingScreen() {
             />
           </div>
 
-          {/* 3D rotating wireframe cube */}
-          <div className="relative mb-10" style={{ perspective: 800 }}>
+          {/* 3D rotating wireframe cube — responsive size */}
+          <div className="relative mb-8 md:mb-10" style={{ perspective: 800 }}>
             <motion.div
-              className="relative"
+              className="relative w-[80px] h-[80px] md:w-[120px] md:h-[120px]"
               style={{
-                width: 120,
-                height: 120,
                 transformStyle: "preserve-3d",
+                willChange: "transform",
               }}
               animate={{ rotateX: 360, rotateY: 360 }}
               transition={{
-                duration: 8,
+                duration: 10,
                 repeat: Infinity,
                 ease: "linear",
               }}
@@ -139,46 +141,45 @@ export function LoadingScreen() {
               {/* 6 faces of the cube */}
               {[
                 {
-                  transform: "translateZ(60px)",
+                  transform: "translateZ(var(--cube-z))",
                   border:
                     "rgb(var(--accent-violet))",
                 },
                 {
-                  transform: "rotateY(90deg) translateZ(60px)",
+                  transform: "rotateY(90deg) translateZ(var(--cube-z))",
                   border:
                     "rgb(var(--accent-pink))",
                 },
                 {
-                  transform: "rotateY(180deg) translateZ(60px)",
+                  transform: "rotateY(180deg) translateZ(var(--cube-z))",
                   border:
                     "rgb(var(--accent-amber))",
                 },
                 {
-                  transform: "rotateY(-90deg) translateZ(60px)",
+                  transform: "rotateY(-90deg) translateZ(var(--cube-z))",
                   border:
                     "rgb(var(--accent-violet))",
                 },
                 {
-                  transform: "rotateX(90deg) translateZ(60px)",
+                  transform: "rotateX(90deg) translateZ(var(--cube-z))",
                   border:
                     "rgb(var(--accent-pink))",
                 },
                 {
-                  transform: "rotateX(-90deg) translateZ(60px)",
+                  transform: "rotateX(-90deg) translateZ(var(--cube-z))",
                   border:
                     "rgb(var(--accent-amber))",
                 },
               ].map((face, i) => (
                 <div
                   key={i}
-                  className="absolute inset-0"
+                  className="absolute inset-0 [--cube-z:40px] md:[--cube-z:60px]"
                   style={{
                     transform: face.transform,
                     border: `1.5px solid ${face.border}`,
-                    borderRadius: 12,
+                    borderRadius: 10,
                     background: `linear-gradient(135deg, ${face.border.replace(")", "/0.08)")}, transparent)`,
-                    backdropFilter: "blur(4px)",
-                    boxShadow: `0 0 30px ${face.border.replace(")", "/0.15)")}, inset 0 0 20px ${face.border.replace(")", "/0.05)")}`,
+                    boxShadow: `0 0 20px ${face.border.replace(")", "/0.12)")}`,
                   }}
                 />
               ))}
@@ -192,7 +193,7 @@ export function LoadingScreen() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative z-10 flex flex-col items-center gap-4"
           >
-            <h1 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
+            <h1 className="font-display text-2xl font-bold tracking-tight md:text-4xl">
               <span className="gradient-text-animated">
                 Dhruv Chandrawanshi
               </span>
@@ -224,7 +225,7 @@ export function LoadingScreen() {
           </motion.div>
 
           {/* Progress bar */}
-          <div className="relative z-10 mt-6 h-1 w-48 overflow-hidden rounded-full bg-white/10">
+          <div className="relative z-10 mt-6 h-1 w-36 md:w-48 overflow-hidden rounded-full bg-white/10">
             <motion.div
               className="h-full rounded-full"
               style={{
