@@ -114,7 +114,7 @@ export function Navbar() {
 
           <a
             href="#contact"
-            className="hidden rounded-full bg-[rgb(var(--accent-violet))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_20px_rgb(var(--accent-violet)/0.5)] transition-all hover:shadow-[0_0_30px_rgb(var(--accent-violet)/0.8)] md:inline-flex"
+            className="hidden rounded-full bg-[rgb(var(--accent-violet))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_20px_rgb(var(--accent-violet)/0.5)] transition-all duration-300 hover:shadow-[0_0_40px_rgb(var(--accent-violet)/0.9)] hover:-translate-y-0.5 hover:scale-105 md:inline-flex"
             data-cursor-hover
           >
             Let&apos;s talk →
