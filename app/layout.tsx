@@ -8,6 +8,7 @@ import { GridBackground } from "@/components/grid-background";
 import { CodeRainBackground } from "@/components/code-globe";
 import { Navbar } from "@/components/navbar";
 import { AiChat } from "@/components/ai-chat";
+import { WhatsAppFab } from "@/components/whatsapp-fab";
 import { SITE } from "@/lib/content";
 
 const geistSans = Geist({
@@ -146,6 +147,7 @@ export default function RootLayout({
             <CustomCursor />
             <Navbar />
             <main className="relative z-10">{children}</main>
+            <WhatsAppFab />
             <AiChat />
           </LenisProvider>
         </ThemeProvider>

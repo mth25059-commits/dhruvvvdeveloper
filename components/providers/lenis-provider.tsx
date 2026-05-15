@@ -1,49 +1,35 @@
 "use client";
 
-import Lenis from "@studio-freight/lenis";
 import { useEffect, type ReactNode } from "react";
 
+/**
+ * Native scroll, no Lenis. Lenis adds an easing/inertia curve to wheel
+ * events that some users perceive as scroll lag ("delay then jump"). For a
+ * portfolio that doesn't drive any scrub-style animations off scrollY,
+ * native wheel scrolling feels far snappier and 1:1 with the input device.
+ *
+ * We still want smooth anchor jumps when clicking the nav, so we intercept
+ * in-page hash links and call scrollIntoView with `behavior: 'smooth'`.
+ * The browser handles the smooth interpolation natively and is GPU-friendly.
+ */
 export function LenisProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
-    // Skip on touch devices for native scroll smoothness
-    const isTouch = window.matchMedia("(hover: none)").matches;
-    if (isTouch) return;
-
-    const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
-    });
-
-    let rafId = 0;
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-    rafId = requestAnimationFrame(raf);
-
-    // Intercept hash links → smooth scroll via Lenis
     const onClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       const anchor = target?.closest("a[href^='#']") as HTMLAnchorElement | null;
       if (!anchor) return;
       const id = anchor.getAttribute("href");
       if (!id || id === "#") return;
-      const el = document.querySelector(id);
-      if (el) {
-        e.preventDefault();
-        lenis.scrollTo(el as HTMLElement, { offset: -40, duration: 1.5 });
-      }
+      const el = document.querySelector(id) as HTMLElement | null;
+      if (!el) return;
+      e.preventDefault();
+      const y = el.getBoundingClientRect().top + window.scrollY - 60;
+      window.scrollTo({ top: y, behavior: "smooth" });
+      // Update the URL hash without re-triggering scroll.
+      history.replaceState(null, "", id);
     };
     document.addEventListener("click", onClick);
-
-    return () => {
-      document.removeEventListener("click", onClick);
-      cancelAnimationFrame(rafId);
-      lenis.destroy();
-    };
+    return () => document.removeEventListener("click", onClick);
   }, []);
 
   return <>{children}</>;

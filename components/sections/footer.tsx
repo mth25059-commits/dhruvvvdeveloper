@@ -38,7 +38,7 @@ export function Footer() {
           <div>
             <div className="text-xs uppercase tracking-[0.16em]">Built with</div>
             <div className="mt-2 font-mono text-xs">
-              Next.js · Tailwind · Framer Motion · GSAP · Lenis
+              Next.js · Tailwind · Framer Motion · GSAP
             </div>
           </div>
           <div>
